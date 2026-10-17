@@ -182,6 +182,4 @@ walle-eve/
   outputs/            sample trace, report, plots, benchmark results
 ```
 
-## License
 
-MIT. Add your name in `LICENSE`.
