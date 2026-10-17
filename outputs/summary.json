@@ -1,0 +1,34 @@
+{
+  "summary": {
+    "agent": "bayes",
+    "seed": 12,
+    "steps": 112,
+    "time_used": 139.0,
+    "battery_used": 133,
+    "moves": 99,
+    "scans": 8,
+    "recharges": 4,
+    "clues_found": 2,
+    "detected": true,
+    "strategy_changes": 10,
+    "final_battery": 37.0
+  },
+  "estimate": {
+    "pos": [
+      28,
+      2
+    ],
+    "status": "dormant",
+    "confidence": 1.0
+  },
+  "evaluation": {
+    "error_cells": 0.0,
+    "location_correct": true,
+    "status_correct": true,
+    "true_pos": [
+      28,
+      2
+    ],
+    "true_status": "dormant"
+  }
+}

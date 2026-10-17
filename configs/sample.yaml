@@ -1,0 +1,61 @@
+# Mission config for "WALL-E and EVE's Signal".
+# Anything omitted falls back to the defaults in walle_eve/config.py.
+# The agent is told: map layout, budgets, costs, sensor characteristics and the initial signal.
+# It must learn EVE's location, status and the clue locations through interaction only.
+
+seed: 12                      # drives map, hidden EVE, clue placement/content, decoys, sensor noise
+
+map:
+  width: 40
+  height: 30
+  obstacle_density: 0.08      # random walls; unreachable pockets are filled in
+  base: [2, 15]               # WALL-E starts here; base is also a charging station
+  stations: [[20, 15]]        # extra charging stations
+
+eve:                          # hidden truth; null => drawn from the seed
+  pos: null
+  status: null                # active | dormant (dormant emits a much weaker signal)
+  status_prior: {active: 0.6, dormant: 0.4}   # what the agent believes before any evidence
+
+initial_signal:               # first reading, taken at the base
+  mode: explicit              # explicit | auto
+  bearing_deg: 354.91         # direction of the strongest source (0 = +x, counter-clockwise)
+  strength: 1.6193
+  timestamp: 0
+
+resources:
+  battery_capacity: 60
+  time_budget: 240
+  reserve: 3                  # battery that must remain on top of the cost of getting home
+  costs:
+    move:     {battery: 1, time: 1}
+    scan:     {battery: 2, time: 2, battery_per_radius: 1}
+    recharge: {amount: 30, time: 6}          # only at a station
+
+clues:
+  count: 6
+  types: {tracks: 0.4, debris: 0.35, log: 0.25}   # bearing hint | range hint | status report
+  tracks_sigma: 0.45          # radians
+  debris_sigma: 1.5           # cells
+  log_accuracy: 0.85
+
+sensors:
+  amplitude: 100.0
+  d0: 4.0
+  status_gain: {active: 1.0, dormant: 0.35}
+  sigma_logstrength: 0.25
+  sigma_bearing: 0.25
+  bias_share: 0.35            # fixed per-cell error: re-scanning one cell does not average it away
+  decoy_count: 2
+  decoy_prob: 0.15            # chance a reading comes from a spoofed emitter
+  p_detect: 0.9               # chance a scan finds EVE if she is within its radius
+
+agent:
+  type: bayes                 # bayes | greedy
+  conclude_confidence: 0.9
+  scan_radii: [2, 4]
+  mc_samples: 6
+  assumed_outlier_prob: 0.15  # how often the agent assumes a reading is spoofed
+
+evaluation:
+  tolerance: 3.0              # cells; a location answer within this is "correct"

@@ -1,0 +1,5 @@
+# A harder mission: many decoys, noisier sensors, tighter battery and time.
+seed: 21
+resources: {battery_capacity: 50, time_budget: 180}
+sensors: {decoy_count: 4, decoy_prob: 0.30, sigma_bearing: 0.35, sigma_logstrength: 0.30}
+agent: {assumed_outlier_prob: 0.3}
